@@ -1,0 +1,279 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Nav renders all list item types (locked=false) 1`] = `
+<nav
+  className="viewer--components--nav is-not-locked is-not-open is-enabled"
+>
+  <div
+    className="obojobo-draft--components--button alt-action is-not-dangerous align-center skip-nav-button"
+  >
+    <button
+      disabled={true}
+      onClick={[Function]}
+      tabIndex={undefined}
+    >
+      Skip Navigation
+    </button>
+  </div>
+  <button
+    className="toggle-button"
+    onClick={[MockFunction]}
+  >
+    Toggle Navigation Menu
+  </button>
+  <ul
+    aria-hidden={true}
+  >
+    <li
+      className="heading is-not-selected"
+    >
+      label4
+    </li>
+    <li
+      className="link is-not-selected is-not-visited is-not-complete is-not-correct is-not-assessment is-not-first-in-list is-not-last-in-list"
+      onClick={[Function]}
+    >
+      <button
+        disabled={true}
+      >
+        label5
+      </button>
+    </li>
+    <li
+      className="link is-not-selected is-not-visited is-not-complete is-not-correct is-not-assessment is-not-first-in-list is-not-last-in-list"
+      onClick={[Function]}
+    >
+      <button
+        disabled={true}
+      >
+        <div
+          className="mockStylableText"
+          text={
+            MockStylableText {
+              "value": "mockMe",
+            }
+          }
+        />
+      </button>
+    </li>
+    <li
+      className="link is-selected is-visited is-complete is-correct is-not-assessment is-not-first-in-list is-not-last-in-list"
+      onClick={[Function]}
+    >
+      <button
+        disabled={true}
+      >
+        label56
+      </button>
+    </li>
+    <li
+      className="sub-link is-not-selected is-not-correct is-last-in-list"
+      onClick={[Function]}
+    >
+      <button
+        disabled={true}
+      >
+        label6
+      </button>
+    </li>
+  </ul>
+  <div
+    className="viewer--components--logo is-not-inverted"
+  >
+    Obojobo
+  </div>
+</nav>
+`;
+
+exports[`Nav renders all list item types (locked=true) 1`] = `
+<nav
+  className="viewer--components--nav is-locked is-not-open is-enabled"
+>
+  <div
+    className="obojobo-draft--components--button alt-action is-not-dangerous align-center skip-nav-button"
+  >
+    <button
+      disabled={true}
+      onClick={[Function]}
+      tabIndex={undefined}
+    >
+      Skip Navigation
+    </button>
+  </div>
+  <button
+    className="toggle-button"
+    onClick={[MockFunction]}
+  >
+    Toggle Navigation Menu
+  </button>
+  <ul
+    aria-hidden={true}
+  >
+    <li
+      className="heading is-not-selected"
+    >
+      label4
+    </li>
+    <li
+      className="link is-not-selected is-not-visited is-not-complete is-not-correct is-not-assessment is-not-first-in-list is-not-last-in-list"
+      onClick={[Function]}
+    >
+      <button
+        disabled={true}
+      >
+        label5
+      </button>
+      <div
+        className="lock-icon"
+      />
+    </li>
+    <li
+      className="link is-not-selected is-not-visited is-not-complete is-not-correct is-not-assessment is-not-first-in-list is-not-last-in-list"
+      onClick={[Function]}
+    >
+      <button
+        disabled={true}
+      >
+        <div
+          className="mockStylableText"
+          text={
+            MockStylableText {
+              "value": "mockMe",
+            }
+          }
+        />
+      </button>
+      <div
+        className="lock-icon"
+      />
+    </li>
+    <li
+      className="link is-selected is-visited is-complete is-correct is-not-assessment is-not-first-in-list is-not-last-in-list"
+      onClick={[Function]}
+    >
+      <button
+        disabled={true}
+      >
+        label56
+      </button>
+      <div
+        className="lock-icon"
+      />
+    </li>
+    <li
+      className="sub-link is-not-selected is-not-correct is-last-in-list"
+      onClick={[Function]}
+    >
+      <button
+        disabled={true}
+      >
+        label6
+      </button>
+      <div
+        className="lock-icon"
+      />
+    </li>
+  </ul>
+  <div
+    className="viewer--components--logo is-not-inverted"
+  >
+    Obojobo
+  </div>
+</nav>
+`;
+
+exports[`Nav renders closed 1`] = `
+<nav
+  className="viewer--components--nav is-locked is-open is-enabled"
+>
+  <div
+    className="obojobo-draft--components--button alt-action is-not-dangerous align-center skip-nav-button"
+  >
+    <button
+      disabled={undefined}
+      onClick={[Function]}
+      tabIndex={undefined}
+    >
+      Skip Navigation
+    </button>
+  </div>
+  <button
+    className="toggle-button"
+    onClick={[MockFunction]}
+  >
+    Toggle Navigation Menu
+  </button>
+  <ul
+    aria-hidden={false}
+  />
+  <div
+    className="viewer--components--logo is-not-inverted"
+  >
+    Obojobo
+  </div>
+</nav>
+`;
+
+exports[`Nav renders opened 1`] = `
+<nav
+  className="viewer--components--nav is-locked is-not-open is-enabled"
+>
+  <div
+    className="obojobo-draft--components--button alt-action is-not-dangerous align-center skip-nav-button"
+  >
+    <button
+      disabled={true}
+      onClick={[Function]}
+      tabIndex={undefined}
+    >
+      Skip Navigation
+    </button>
+  </div>
+  <button
+    className="toggle-button"
+    onClick={[MockFunction]}
+  >
+    Toggle Navigation Menu
+  </button>
+  <ul
+    aria-hidden={true}
+  />
+  <div
+    className="viewer--components--logo is-not-inverted"
+  >
+    Obojobo
+  </div>
+</nav>
+`;
+
+exports[`Nav renders unlocked 1`] = `
+<nav
+  className="viewer--components--nav is-not-locked is-not-open is-enabled"
+>
+  <div
+    className="obojobo-draft--components--button alt-action is-not-dangerous align-center skip-nav-button"
+  >
+    <button
+      disabled={true}
+      onClick={[Function]}
+      tabIndex={undefined}
+    >
+      Skip Navigation
+    </button>
+  </div>
+  <button
+    className="toggle-button"
+    onClick={[MockFunction]}
+  >
+    Toggle Navigation Menu
+  </button>
+  <ul
+    aria-hidden={true}
+  />
+  <div
+    className="viewer--components--logo is-not-inverted"
+  >
+    Obojobo
+  </div>
+</nav>
+`;
