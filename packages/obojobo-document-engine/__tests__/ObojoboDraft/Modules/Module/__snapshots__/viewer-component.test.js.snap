@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Module Module component 1`] = `
+<div
+  className="component obojobo-draft--modules--module"
+  data-focussed={false}
+  data-id="d1a5463a-b579-4a93-b530-5c8b6cf0a1c5"
+  data-obo-component={true}
+  data-type="ObojoboDraft.Modules.Module"
+  id="obo-d1a5463a-b579-4a93-b530-5c8b6cf0a1c5"
+>
+  <div />
+</div>
+`;
+
+exports[`Module Module component with child 1`] = `
+<div
+  className="component obojobo-draft--modules--module"
+  data-focussed={false}
+  data-id="d1a5463a-b579-4a93-b530-5c8b6cf0a1c5"
+  data-obo-component={true}
+  data-type="ObojoboDraft.Modules.Module"
+  id="obo-d1a5463a-b579-4a93-b530-5c8b6cf0a1c5"
+>
+  <div>
+    <MockComponent
+      model={
+        Object {
+          "getComponentClass": [MockFunction] {
+            "calls": Array [
+              Array [],
+            ],
+          },
+        }
+      }
+      moduleData={
+        Object {
+          "focusState": Object {},
+          "navState": Object {},
+        }
+      }
+    />
+  </div>
+</div>
+`;
