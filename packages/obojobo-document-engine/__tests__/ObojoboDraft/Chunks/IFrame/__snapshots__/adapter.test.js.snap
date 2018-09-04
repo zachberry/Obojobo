@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`IFrame adapter construct builds without attributes 1`] = `
+Object {
+  "modelState": Object {
+    "autoload": false,
+    "border": false,
+    "controls": Array [
+      "reload",
+      "expand",
+    ],
+    "expandedSize": "full",
+    "fit": "scale",
+    "height": null,
+    "newWindow": false,
+    "newWindowSrc": null,
+    "src": null,
+    "title": null,
+    "type": "media",
+    "width": null,
+    "zoom": 1,
+  },
+}
+`;
+
+exports[`IFrame adapter toJSON builds a JSON representation 1`] = `
+Object {
+  "content": Object {
+    "autoload": false,
+    "border": false,
+    "controls": Array [
+      "reload",
+      "expand",
+    ],
+    "expandedSize": "full",
+    "fit": "scale",
+    "height": null,
+    "newWindow": false,
+    "newWindowSrc": null,
+    "src": "mockSrc",
+    "title": null,
+    "type": "media",
+    "width": null,
+    "zoom": 1,
+  },
+}
+`;
