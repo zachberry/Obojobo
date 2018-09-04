@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ObjoboDraftDoc>
+    <Assessment>
+        <Page>
+        </Page>
+        <QuestionBank>
+        </QuestionBank>
+        <scoreActions>
+            <scoreAction for="no-score">
+                <Page>
+                </Page>
+            </scoreAction>
+            <scoreAction for="[0,50)">
+                <Page>
+                </Page>
+            </scoreAction>
+            <scoreAction from="50" to="90"> <!-- Legacy from/to attributes -->
+                <Page>
+                </Page>
+            </scoreAction>
+            <scoreAction for="(90,100)">
+                <Page>
+                </Page>
+            </scoreAction>
+            <scoreAction for="100">
+                <Page>
+                </Page>
+            </scoreAction>
+        </scoreActions>
+        <rubric type="pass-fail" passingAttemptScore="80" passedResult="100" failedResult="0" unableToPassResult="$highest_attempt_score">
+            <mods>
+                <mod attemptCondition="1" reward="5" />
+                <mod attemptCondition="(80,100]" reward="2" />
+            </mods>
+        </rubric>
+    </Assessment>
+</ObjoboDraftDoc>
