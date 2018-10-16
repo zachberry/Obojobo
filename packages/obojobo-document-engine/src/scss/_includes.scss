@@ -4,7 +4,7 @@ $color-error: #990000;
 $color-dangerous: #d40000;
 $color-text: #000000;
 $color-text-minor: lighten($color-text, 40%);
-$color-text-subheading: #a20e83;
+// $color-text-subheading: #a20e83;
 $color-bg: #ffffff;
 $color-shadow: rgba(0, 0, 0, 0.3);
 $color-highlight: #93c6ff;
@@ -29,7 +29,7 @@ $box-shadow-overlay: 0 2px 2px $color-shadow;
 
 $duration-animation-default: 0.2s;
 
-$font-default: 'Libre Franklin', Arial, sans-serif;
+// var(--font-default): 'Libre Franklin', Arial, sans-serif;
 $font-text: 'Noto Serif', serif;
 $font-monospace: 'Roboto Mono', monospace;
 
@@ -63,7 +63,7 @@ $z-index-preview: 999999;
 	background: $color-bg2;
 	box-sizing: border-box;
 	color: $color-placeholder-text;
-	font-family: $font-default;
+	font-family: var(--font-default);
 	font-size: 1rem;
 	font-weight: bold;
 	height: $height;

@@ -1,0 +1,45 @@
+.viewer--viewer-app {
+	--color-h2: red;
+	--font-headings: 'Oswald';
+	--font-text: 'Open Sans';
+}
+
+html {
+	--font-default: 'Oswald';
+}
+
+.viewer--viewer-app {
+	// background: red;
+
+	h1 {
+		font-weight: normal;
+		font-family: 'Oswald';
+		padding-bottom: 0.3em;
+		border-bottom: 2px dotted #00000014;
+		font-size: 2.2em;
+	}
+
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		font-family: 'Open Sans';
+	}
+
+	h2 {
+		color: #182f68;
+		font-size: 1.3em;
+	}
+
+	.component {
+		font-family: 'Open Sans';
+	}
+
+	pre,
+	code,
+	pre code,
+	textarea {
+		font-family: 'Roboto Mono';
+	}
+}

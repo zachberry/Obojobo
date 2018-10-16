@@ -6,6 +6,7 @@ const createCaliperEvent = oboRequire('routes/api/events/create_caliper_event')
 const { ACTOR_USER } = oboRequire('routes/api/events/caliper_constants')
 const { getSessionIds } = oboRequire('routes/api/events/caliper_utils')
 const ltiLaunch = oboRequire('express_lti_launch')
+const themes = require('../../obojobo-document-engine/src/scripts/viewer/components/themes')
 const {
 	checkValidationRules,
 	requireCurrentDocument,
@@ -93,7 +94,12 @@ router
 			})
 			.then(() => {
 				const draft = req.currentDocument
+				const theme = themes[draft.root.node.content.theme || 'default']
+				console.log('theme be all', draft.root.node.content.theme)
 				res.render('viewer', {
+					themeClass: 'themsies',
+					themeCSS: theme.cssPath,
+					themeFonts: [theme.googleFontFamilies],
 					draftTitle:
 						draft &&
 						draft.root &&

@@ -3,6 +3,7 @@ import './viewer-app.scss'
 
 import React from 'react'
 import ReactDOM from 'react-dom'
+import WebFont from 'webfontloader'
 
 import Common from 'Common'
 import IdleTimer from 'react-idle-timer'
@@ -17,6 +18,7 @@ import MediaStore from '../../viewer/stores/media-store'
 import Nav from './nav'
 import getLTIOutcomeServiceHostname from '../../viewer/util/get-lti-outcome-service-hostname'
 import Header from '../../viewer/components/header'
+import themes from './themes'
 
 const IDLE_TIMEOUT_DURATION_MS = 600000 // 10 minutes
 const NAV_CLOSE_DURATION_MS = 400
@@ -69,7 +71,8 @@ export default class ViewerApp extends React.Component {
 			isPreviewing: false,
 			lti: {
 				outcomeServiceHostname: null
-			}
+			},
+			theme: null
 		}
 		this.onNavStoreChange = () => this.setState({ navState: NavStore.getState() })
 		this.onQuestionStoreChange = () => this.setState({ questionState: QuestionStore.getState() })
@@ -152,7 +155,8 @@ export default class ViewerApp extends React.Component {
 					focusState: FocusStore.getState(),
 					lti: Object.assign(this.state.lti, {
 						outcomeServiceHostname: getLTIOutcomeServiceHostname(outcomeServiceURL)
-					})
+					}),
+					theme: model.modelState.theme || 'default'
 				})
 
 				window.onbeforeunload = this.onBeforeWindowClose
@@ -205,6 +209,10 @@ export default class ViewerApp extends React.Component {
 		if (this.state.loading && !nextState.loading) {
 			this.needsRemoveLoadingElement = true
 		}
+
+		if (nextState.theme !== this.state.theme) {
+			this.needsThemeUpdate = true
+		}
 	}
 
 	componentDidUpdate() {
@@ -228,6 +236,12 @@ export default class ViewerApp extends React.Component {
 
 				delete this.needsRemoveLoadingElement
 			}
+		}
+
+		if (this.needsThemeUpdate) {
+			delete this.needsThemeUpdate
+
+			this.updateTheme()
 		}
 	}
 
@@ -410,6 +424,42 @@ export default class ViewerApp extends React.Component {
 		return NavUtil.unlock()
 	}
 
+	onChangeTheme(event) {
+		this.setState({
+			theme: event.target.value
+		})
+	}
+
+	updateTheme() {
+		console.log('UPDATA THEME')
+		// return
+		const curTheme = themes[this.state.theme]
+
+		// if(curTheme.googleFontFamilies.length)
+		// {
+		// 	WebFont.load({
+		// 		google: {
+		// 			families: curTheme.googleFontFamilies
+		// 		}
+		// 	})
+		// }
+		const fontLinkEl = document.querySelector('link.fonts')
+
+		// const style = document.documentElement.style;
+		// style.setProperty('--font-headings', curTheme.fontHeadings)
+		// style.setProperty('--font-text', curTheme.fontText)
+		// style.setProperty('--font-mono', curTheme.fontMono)
+		// style.setProperty('--color-h1', curTheme.colorH1)
+		// style.setProperty('--color-h2', curTheme.colorH2)
+		// style.setProperty('--color-text', curTheme.colorText)
+		// style.setProperty('--dimension-line-height', curTheme.dimensionLineHeight)
+
+		document
+			.getElementById('viewer-app-theme-fonts')
+			.setAttribute('href', '//fonts.googleapis.com/css?family=' + curTheme.googleFontFamilies)
+		document.getElementById('viewer-app-theme-styles').setAttribute('href', curTheme.cssPath)
+	}
+
 	render() {
 		if (this.state.loading) return null
 
@@ -503,6 +553,14 @@ export default class ViewerApp extends React.Component {
 					onScroll={this.onScroll.bind(this)}
 					className={classNames}
 				>
+					<select value={this.state.theme} id="change-theme-button" onChange={this.onChangeTheme.bind(this)}>
+						{
+							Object.keys(themes).map((themeKey) => {
+								let theme = themes[themeKey]
+								return <option key={themeKey} value={themeKey}>{theme.label}</option>
+							})
+						}
+					</select>
 					{hideViewer ? null : (
 						<Header moduleTitle={this.state.model.title} location={navTargetTitle} />
 					)}

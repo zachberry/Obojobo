@@ -4,7 +4,7 @@
 	background: transparentize($color-action, 0.95);
 	width: 100%;
 	border: none;
-	font-family: $font-default;
+	font-family: var(--font-default);
 	font-size: 0.9em;
 	padding: 1em;
 	box-sizing: border-box;

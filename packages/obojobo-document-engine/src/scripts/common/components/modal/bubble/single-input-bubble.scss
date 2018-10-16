@@ -22,7 +22,7 @@
 		box-sizing: border-box;
 		color: $color-bg;
 		cursor: pointer;
-		font-family: $font-default;
+		font-family: var(--font-default);
 		font-size: 0.8em;
 		font-weight: bold;
 		height: 2em;
@@ -35,7 +35,7 @@
 	.label {
 		color: $color-text-minor;
 		display: block;
-		font-family: $font-default;
+		font-family: var(--font-default);
 		font-size: 0.7em;
 		font-weight: bold;
 		text-align: center;

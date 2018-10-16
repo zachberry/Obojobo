@@ -227,4 +227,50 @@ const mainConfig = {
 	}
 }
 
-module.exports = [obojoboDraftConfig, viewerConfig, mainConfig]
+
+
+
+
+
+
+
+const themesConfig = {
+	entry: {
+		'theme.default': [path.join(__dirname, 'src', 'scss', 'themes', 'default.scss')],
+		'theme.wacky': [path.join(__dirname, 'src', 'scss', 'themes', 'wacky.scss')],
+		'theme.crazy': [path.join(__dirname, 'src', 'scss', 'themes', 'crazy.scss')],
+		'theme.dyslexic': [path.join(__dirname, 'src', 'scss', 'themes', 'dyslexic.scss')]
+	},
+	output: {
+		path: path.join(__dirname, 'build'),
+		// publicPath: 'build/'
+	},
+	module: {
+		rules: [
+			{
+				test: /\.s?css$/,
+				use: [
+					MiniCssExtractPlugin.loader,
+					'css-loader',
+					{
+						loader: 'postcss-loader',
+						options: {
+							plugins: () => [autoprefixer]
+						}
+					},
+					'sass-loader'
+				]
+			},
+			{
+				test: /\.(woff|woff2|eot|ttf|otf)$/,
+				loader: 'file-loader',
+				options: {
+					name: '[name].[ext]'
+				}
+			}
+		]
+	},
+	plugins: [new MiniCssExtractPlugin()]
+}
+
+module.exports = [themesConfig, obojoboDraftConfig, viewerConfig, mainConfig]

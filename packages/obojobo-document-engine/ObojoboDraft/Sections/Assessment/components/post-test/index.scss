@@ -10,7 +10,7 @@
 	}
 
 	> .overview {
-		font-family: $font-default;
+		font-family: var(--font-default);
 		text-align: center;
 		background-color: $color-bg2;
 		border-radius: $dimension-rounded-radius;

@@ -35,7 +35,7 @@
 		color: $color-bg;
 		cursor: pointer;
 		display: inline-block;
-		font-family: $font-default;
+		font-family: var(--font-default);
 		font-size: 1em;
 		font-weight: bold;
 		height: $size * 0.7;

@@ -75,7 +75,7 @@
 		padding-right: $dimension-padding;
 		content: 'Practice';
 		display: block;
-		font-family: $font-default;
+		font-family: var(--font-default);
 		color: $color-action;
 		font-size: $font-size;
 		font-weight: normal;
@@ -117,7 +117,7 @@
 		padding-right: 1em;
 
 		.pick-all-instructions {
-			font-family: $font-default;
+			font-family: var(--font-default);
 			font-size: 0.8em;
 			font-weight: bold;
 			color: $color-incorrect;
@@ -129,7 +129,7 @@
 		}
 
 		.result {
-			font-family: $font-default;
+			font-family: var(--font-default);
 			color: $color-bg;
 			font-weight: bold;
 			box-sizing: border-box;
@@ -213,7 +213,7 @@
 					$color-feedback-text: transparentize($color-text, 0.5);
 
 					content: 'Feedback:';
-					font-family: $font-default;
+					font-family: var(--font-default);
 					font-size: 0.7em;
 					margin-left: 3em * (1 / 0.7);
 					font-weight: bold;
@@ -236,7 +236,7 @@
 							position: absolute;
 							top: 1em;
 							left: 4em;
-							font-family: $font-default;
+							font-family: var(--font-default);
 							font-size: 1em;
 							letter-spacing: 0.25em;
 						}
@@ -268,7 +268,7 @@
 				$color-solution-label-text: transparentize($color-text, 0.25);
 
 				content: 'Full explanation:';
-				font-family: $font-default;
+				font-family: var(--font-default);
 				font-size: 1em;
 				font-weight: bold;
 				color: $color-solution-label-text;

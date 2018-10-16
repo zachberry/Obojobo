@@ -1,0 +1,43 @@
+.viewer--viewer-app {
+	--color-h2: red;
+	--font-headings: 'Oswald';
+	--font-text: 'Open Sans';
+}
+
+html {
+	--font-default: 'Montserrat';
+}
+
+.viewer--viewer-app {
+	// background: red;
+
+	h1 {
+		font-family: 'Montserrat'; //EB Garamond
+		font-size: 2.2em;
+	}
+
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		font-family: 'Montserrat';
+	}
+
+	h2 {
+		color: #9a487c;
+		font-size: 1.3em;
+	}
+
+	.component {
+		font-family: 'Rubik';
+		font-weight: 300;
+	}
+
+	pre,
+	code,
+	pre code,
+	textarea {
+		font-family: 'Roboto Mono';
+	}
+}

@@ -13,7 +13,7 @@
 		box-shadow: 0 1px 1px $color-shadow;
 		color: $color-action;
 		cursor: pointer;
-		font-family: $font-default;
+		font-family: var(--font-default);
 		font-size: 0.7em;
 		height: 2em;
 		margin-left: 1em;

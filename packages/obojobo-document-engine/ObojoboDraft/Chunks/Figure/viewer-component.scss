@@ -27,7 +27,7 @@
 	}
 
 	figcaption {
-		font-family: $font-default;
+		font-family: var(--font-default);
 		font-size: 0.8em;
 		color: $color-text-minor;
 	}

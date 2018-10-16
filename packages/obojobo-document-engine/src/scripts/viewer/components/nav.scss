@@ -12,7 +12,7 @@
 	left: 0;
 	bottom: 0;
 	z-index: $z-index-above-content;
-	font-family: $font-default;
+	font-family: var(--font-default);
 	color: $color-text;
 	background: $color-nav-bg;
 	font-size: 1rem;

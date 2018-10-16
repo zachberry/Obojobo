@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="theme-<%- themeClass %>">
 
 <head>
 	<%
@@ -18,9 +18,12 @@
 				assetForEnv('//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.js'),
 				assetForEnv('/static/viewer$[.min].js')
 			]
-			let fonts = ['//fonts.googleapis.com/css?family=Libre+Franklin:400,400i,700,700i,900,900i|Roboto+Mono:400,400i,700,700i|Noto+Serif:400,400i,700,700i']
+			let fonts = ['//fonts.googleapis.com/css?family=Libre+Franklin:400,400i,700,700i,900,900i']
 		%>
 		<%- include ./partials/head %>
+
+		<link id="viewer-app-theme-styles" rel="stylesheet" media="screen" href="<%= themeCSS %>" />
+		<link id="viewer-app-theme-fonts" rel="stylesheet" media="screen" href="//fonts.googleapis.com/css?family=<%= themeFonts %>" />
 </head>
 
 <body>

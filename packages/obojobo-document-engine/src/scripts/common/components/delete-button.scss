@@ -10,7 +10,7 @@
 		box-sizing: border-box;
 		cursor: pointer;
 		display: block;
-		font-family: $font-default;
+		font-family: var(--font-default);
 		font-size: inherit;
 		height: $default-size;
 		overflow: hidden;

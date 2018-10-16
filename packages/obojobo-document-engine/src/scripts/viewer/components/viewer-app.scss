@@ -1,5 +1,13 @@
 @import '../../../scss/includes';
 
+#change-theme-button {
+	position: fixed;
+	right: 0;
+	top: 0;
+	z-index: 999999999;
+	font-size: 16pt;
+}
+
 .viewer--viewer-app--visit-error {
 	width: 100%;
 	max-width: 36rem;
@@ -9,7 +17,7 @@
 	top: 20%;
 	transform: translate(-50%, -50%);
 	color: $color-text;
-	font-family: $font-default;
+	font-family: var(--font-default);
 }
 
 .viewer--viewer-app {
@@ -46,7 +54,7 @@
 	}
 
 	> .preview-banner {
-		font-family: $font-default;
+		font-family: var(--font-default);
 		background: $color-preview;
 		box-sizing: border-box;
 		color: $color-bg;
@@ -73,7 +81,7 @@
 				appearance: none;
 				user-select: none;
 				margin-left: 1em;
-				font-family: $font-default;
+				font-family: var(--font-default);
 				line-height: 1em;
 				cursor: pointer;
 				font-size: 1em;

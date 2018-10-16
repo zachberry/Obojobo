@@ -26,7 +26,7 @@
 			display: flex;
 			justify-content: space-between;
 			align-items: start;
-			font-family: $font-default;
+			font-family: var(--font-default);
 
 			> .attempt-info-container {
 				display: flex;
@@ -118,7 +118,7 @@
 			.is-not-correct > p {
 				margin-top: 0;
 				margin-bottom: 0;
-				font-family: $font-default;
+				font-family: var(--font-default);
 				font-weight: bold;
 			}
 

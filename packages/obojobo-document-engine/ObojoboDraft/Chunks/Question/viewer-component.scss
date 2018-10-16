@@ -40,7 +40,7 @@
 
 			> .obojobo-draft--components--button {
 				transition: transform $duration-animation-default;
-				font-family: $font-default;
+				font-family: var(--font-default);
 				color: $color-action;
 				position: absolute;
 				left: 50%;
@@ -68,7 +68,7 @@
 			transform: rotateY(180deg);
 
 			> .responses-hidden {
-				font-family: $font-default;
+				font-family: var(--font-default);
 				font-size: 0.9em;
 				text-align: center;
 				margin-bottom: 1em;
@@ -99,7 +99,7 @@
 			color: $color-text-minor;
 			content: 'Practice';
 			display: block;
-			font-family: $font-default;
+			font-family: var(--font-default);
 			position: absolute;
 			left: 3.15em;
 			top: -0.5em;

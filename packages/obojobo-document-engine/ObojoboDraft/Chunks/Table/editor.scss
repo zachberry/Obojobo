@@ -71,7 +71,7 @@
 
 		th {
 			background: $color-bg2;
-			font-family: $font-default;
+			font-family: var(--font-default);
 			font-size: 0.9em;
 			text-align: center;
 		}

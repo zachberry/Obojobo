@@ -14,7 +14,7 @@
 		font-weight: bold;
 		font-size: 1em;
 		z-index: $z-index-above-all;
-		font-family: $font-default;
+		font-family: var(--font-default);
 	}
 
 	> .control-button-container {
@@ -37,7 +37,7 @@
 			background-repeat: no-repeat;
 			cursor: pointer;
 			vertical-align: top;
-			font-family: $font-default;
+			font-family: var(--font-default);
 			transition: color $duration-animation-default;
 			word-wrap: initial;
 			white-space: nowrap;
@@ -140,7 +140,7 @@
 		position: relative;
 		display: inline-block;
 		margin-top: 0;
-		font-family: $font-default;
+		font-family: var(--font-default);
 		font-size: 0.7em;
 		opacity: 0.75;
 		line-height: 1.5em;

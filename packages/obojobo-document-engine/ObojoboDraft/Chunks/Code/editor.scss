@@ -17,7 +17,7 @@
 				bottom: -2em;
 				color: $color-text-minor;
 				content: 'Shift+Enter to stop editing';
-				font-family: $font-default;
+				font-family: var(--font-default);
 				font-size: 0.7em;
 				left: 2em;
 				position: absolute;
