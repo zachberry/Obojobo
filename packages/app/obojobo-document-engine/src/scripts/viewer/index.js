@@ -1,4 +1,7 @@
-import APIUtil from './util/api-util'
+import getNetworkAdapter from './net/get-network-adapter'
+import NetworkAdapter from './net/adapters/network-adapter'
+import OfflineAdapter from './net/adapters/offline-adapter'
+import OnlineAdapter from './net/adapters/online-adapter'
 import AssessmentScoreReportView from './assessment/assessment-score-report-view'
 import AssessmentScoreReporter from './assessment/assessment-score-reporter'
 import AssessmentStore from './stores/assessment-store'
@@ -42,7 +45,6 @@ export default {
 	util: {
 		AssessmentUtil,
 		NavUtil,
-		APIUtil,
 		MediaUtil,
 		QuestionUtil,
 		FocusUtil,
@@ -52,5 +54,14 @@ export default {
 	assessment: {
 		AssessmentScoreReporter,
 		AssessmentScoreReportView
+	},
+
+	net: {
+		getNetworkAdapter,
+		adapters: {
+			NetworkAdapter,
+			OfflineAdapter,
+			OnlineAdapter
+		}
 	}
 }

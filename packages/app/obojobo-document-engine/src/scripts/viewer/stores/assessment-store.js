@@ -1,4 +1,3 @@
-import APIUtil from '../../viewer/util/api-util'
 import AssessmentScoreReportView from '../../viewer/assessment/assessment-score-report-view'
 import AssessmentScoreReporter from '../../viewer/assessment/assessment-score-reporter'
 import AssessmentUtil from '../../viewer/util/assessment-util'
@@ -57,7 +56,8 @@ class AssessmentStore extends Store {
 		})
 	}
 
-	init(attemptsByAssessment) {
+	init(networkAdapter, attemptsByAssessment) {
+		this.networkAdapter = networkAdapter
 		this.state = {
 			assessments: {}
 		}
@@ -148,14 +148,22 @@ class AssessmentStore extends Store {
 	tryStartAttempt(id) {
 		const model = OboModel.models[id]
 
-		return APIUtil.startAttempt({
-			draftId: model.getRoot().get('draftId'),
-			assessmentId: model.get('id'),
-			visitId: NavStore.getState().visitId
-		})
+		return this.networkAdapter
+			.startAttempt({
+				draftId: model.getRoot().get('draftId'),
+				assessmentId: model.get('id'),
+				visitId: NavStore.getState().visitId
+			})
 			.then(res => {
 				if (res.status === 'error') {
 					switch (res.value.message.toLowerCase()) {
+						case 'functionality not available when offline':
+							ErrorUtil.show(
+								"Can't start attempt",
+								'Assessment attempts are not implemented in offline mode.'
+							)
+							break
+
 						case 'attempt limit reached':
 							ErrorUtil.show(
 								'No attempts left',
@@ -204,11 +212,12 @@ class AssessmentStore extends Store {
 	tryEndAttempt(id, context) {
 		const model = OboModel.models[id]
 		const assessment = this.state.assessments[id]
-		return APIUtil.endAttempt({
-			attemptId: assessment.current.attemptId,
-			draftId: model.getRoot().get('draftId'),
-			visitId: NavStore.getState().visitId
-		})
+		return this.networkAdapter
+			.endAttempt({
+				attemptId: assessment.current.attemptId,
+				draftId: model.getRoot().get('draftId'),
+				visitId: NavStore.getState().visitId
+			})
 			.then(res => {
 				if (res.status === 'error') {
 					return ErrorUtil.errorResponse(res)
@@ -278,11 +287,12 @@ class AssessmentStore extends Store {
 		assessment.ltiNetworkState = LTINetworkStates.AWAITING_SEND_ASSESSMENT_SCORE_RESPONSE
 		this.triggerChange()
 
-		return APIUtil.resendLTIAssessmentScore({
-			draftId: assessmentModel.getRoot().get('draftId'),
-			assessmentId: assessmentModel.get('id'),
-			visitId: NavStore.getState().visitId
-		})
+		return this.networkAdapter
+			.resendLTIAssessmentScore({
+				draftId: assessmentModel.getRoot().get('draftId'),
+				assessmentId: assessmentModel.get('id'),
+				visitId: NavStore.getState().visitId
+			})
 			.then(res => {
 				assessment.ltiNetworkState = LTINetworkStates.IDLE
 

@@ -1,7 +1,6 @@
 import '../../../scss/main.scss'
 import './viewer-app.scss'
 
-import APIUtil from '../../viewer/util/api-util'
 import AssessmentStore from '../../viewer/stores/assessment-store'
 import Common from 'Common'
 import FocusStore from '../../viewer/stores/focus-store'
@@ -17,6 +16,7 @@ import QuestionStore from '../../viewer/stores/question-store'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import getLTIOutcomeServiceHostname from '../../viewer/util/get-lti-outcome-service-hostname'
+import getNetworkAdapter from '../../viewer/net/get-network-adapter'
 
 const IDLE_TIMEOUT_DURATION_MS = 600000 // 10 minutes
 const NAV_CLOSE_DURATION_MS = 400
@@ -53,6 +53,14 @@ export default class ViewerApp extends React.Component {
 			this.scrollToTop(payload && payload.value ? payload.value.animateScroll : false)
 		})
 		Dispatcher.on('getTextForVariable', this.getTextForVariable.bind(this))
+		Dispatcher.on('viewer:pushState', payload => {
+			if (this.state.isOffline) return
+			window.history.pushState({}, document.title, payload.url)
+		})
+
+		const urlTokens = document.location.pathname.split('/')
+		const draftIdFromUrl = urlTokens[2] ? urlTokens[2] : null
+		console.log(draftIdFromUrl)
 
 		const state = {
 			model: null,
@@ -65,8 +73,10 @@ export default class ViewerApp extends React.Component {
 			loading: true,
 			requestStatus: 'unknown',
 			isPreviewing: false,
+			isOffline: draftIdFromUrl === null,
 			lti: { outcomeServiceHostname: null }
 		}
+		this.networkAdapter = getNetworkAdapter({ isOffline: draftIdFromUrl === null })
 		this.navTargetId = null
 		this.onNavStoreChange = () => this.setState({ navState: NavStore.getState() })
 		this.onQuestionStoreChange = () => this.setState({ questionState: QuestionStore.getState() })
@@ -119,12 +129,13 @@ export default class ViewerApp extends React.Component {
 
 		Dispatcher.trigger('viewer:loading')
 
-		APIUtil.requestStart(visitIdFromUrl, draftIdFromUrl)
+		this.networkAdapter
+			.requestStart(visitIdFromUrl, draftIdFromUrl)
 			.then(visit => {
-				QuestionStore.init()
-				ModalStore.init()
-				FocusStore.init()
-				MediaStore.init()
+				QuestionStore.init(this.networkAdapter)
+				ModalStore.init(this.networkAdapter)
+				FocusStore.init(this.networkAdapter)
+				MediaStore.init(this.networkAdapter)
 
 				if (visit.status !== 'ok') throw 'Invalid Visit Id'
 
@@ -134,19 +145,27 @@ export default class ViewerApp extends React.Component {
 				isPreviewing = visit.value.isPreviewing
 				outcomeServiceURL = visit.value.lti.lisOutcomeServiceUrl
 
-				return APIUtil.getDraft(draftIdFromUrl)
+				return this.networkAdapter.getDraft(draftIdFromUrl)
 			})
 			.then(({ value: draftModel }) => {
 				const model = OboModel.create(draftModel)
 
 				NavStore.init(
+					this.networkAdapter,
 					model,
 					model.modelState.start,
 					window.location.pathname,
 					visitIdFromApi,
 					viewState
 				)
-				AssessmentStore.init(attemptHistory)
+
+				//@HACK
+				if (this.state.isOffline) {
+					NavUtil.close()
+					NavUtil.lock()
+				}
+
+				AssessmentStore.init(this.networkAdapter, attemptHistory)
 
 				window.onbeforeunload = this.onBeforeWindowClose
 				window.onunload = this.onWindowClose
@@ -317,16 +336,18 @@ export default class ViewerApp extends React.Component {
 		if (document.hidden) {
 			this.leftEpoch = new Date()
 
-			APIUtil.postEvent({
-				draftId: this.state.model.get('draftId'),
-				action: 'viewer:leave',
-				eventVersion: '1.0.0',
-				visitId: this.state.navState.visitId
-			}).then(res => {
-				this.leaveEvent = res.value
-			})
+			this.networkAdapter
+				.postEvent({
+					draftId: this.state.model.get('draftId'),
+					action: 'viewer:leave',
+					eventVersion: '1.0.0',
+					visitId: this.state.navState.visitId
+				})
+				.then(res => {
+					this.leaveEvent = res.value
+				})
 		} else {
-			APIUtil.postEvent({
+			this.networkAdapter.postEvent({
 				draftId: this.state.model.get('draftId'),
 				action: 'viewer:return',
 				eventVersion: '2.0.0',
@@ -422,22 +443,24 @@ export default class ViewerApp extends React.Component {
 	onIdle() {
 		this.lastActiveEpoch = new Date(this.idleTimerRef.current.getLastActiveTime())
 
-		APIUtil.postEvent({
-			draftId: this.state.model.get('draftId'),
-			action: 'viewer:inactive',
-			eventVersion: '3.0.0',
-			visitId: this.state.navState.visitId,
-			payload: {
-				lastActiveTime: this.lastActiveEpoch,
-				inactiveDuration: IDLE_TIMEOUT_DURATION_MS
-			}
-		}).then(res => {
-			this.inactiveEvent = res.value
-		})
+		this.networkAdapter
+			.postEvent({
+				draftId: this.state.model.get('draftId'),
+				action: 'viewer:inactive',
+				eventVersion: '3.0.0',
+				visitId: this.state.navState.visitId,
+				payload: {
+					lastActiveTime: this.lastActiveEpoch,
+					inactiveDuration: IDLE_TIMEOUT_DURATION_MS
+				}
+			})
+			.then(res => {
+				this.inactiveEvent = res.value
+			})
 	}
 
 	onReturnFromIdle() {
-		APIUtil.postEvent({
+		this.networkAdapter.postEvent({
 			draftId: this.state.model.get('draftId'),
 			action: 'viewer:returnFromInactive',
 			eventVersion: '2.1.0',
@@ -471,7 +494,7 @@ export default class ViewerApp extends React.Component {
 	}
 
 	onWindowClose() {
-		APIUtil.postEvent({
+		this.networkAdapter.postEvent({
 			draftId: this.state.model.get('draftId'),
 			action: 'viewer:close',
 			eventVersion: '1.0.0',
@@ -480,32 +503,34 @@ export default class ViewerApp extends React.Component {
 	}
 
 	clearPreviewScores() {
-		APIUtil.clearPreviewScores({
-			draftId: this.state.model.get('draftId'),
-			visitId: this.state.navState.visitId
-		}).then(res => {
-			if (res.status === 'error' || res.error) {
+		this.networkAdapter
+			.clearPreviewScores({
+				draftId: this.state.model.get('draftId'),
+				visitId: this.state.navState.visitId
+			})
+			.then(res => {
+				if (res.status === 'error' || res.error) {
+					return ModalUtil.show(
+						<SimpleDialog ok width="15em">
+							{res.value && res.value.message
+								? `There was an error resetting assessments and questions: ${res.value.message}.`
+								: 'There was an error resetting assessments and questions'}
+						</SimpleDialog>
+					)
+				}
+
+				AssessmentStore.init(this.networkAdapter)
+				QuestionStore.init(this.networkAdapter)
+
+				AssessmentStore.triggerChange()
+				QuestionStore.triggerChange()
+
 				return ModalUtil.show(
 					<SimpleDialog ok width="15em">
-						{res.value && res.value.message
-							? `There was an error resetting assessments and questions: ${res.value.message}.`
-							: 'There was an error resetting assessments and questions'}
+						Assessment attempts and all question responses have been reset.
 					</SimpleDialog>
 				)
-			}
-
-			AssessmentStore.init()
-			QuestionStore.init()
-
-			AssessmentStore.triggerChange()
-			QuestionStore.triggerChange()
-
-			return ModalUtil.show(
-				<SimpleDialog ok width="15em">
-					Assessment attempts and all question responses have been reset.
-				</SimpleDialog>
-			)
-		})
+			})
 	}
 
 	unlockNavigation() {

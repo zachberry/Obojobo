@@ -1,7 +1,6 @@
 import Common from 'Common'
 
 import NavUtil from '../../viewer/util/nav-util'
-import APIUtil from '../../viewer/util/api-util'
 import FocusUtil from '../../viewer/util/focus-util'
 
 const { Store } = Common.flux
@@ -27,7 +26,7 @@ class NavStore extends Store {
 				'nav:gotoPath': payload => {
 					oldNavTargetId = this.state.navTargetId
 					if (this.gotoItem(this.state.itemsByPath[payload.value.path])) {
-						APIUtil.postEvent({
+						this.networkAdapter.postEvent({
 							draftId: OboModel.getRoot().get('draftId'),
 							action: 'nav:gotoPath',
 							eventVersion: '1.0.0',
@@ -48,7 +47,7 @@ class NavStore extends Store {
 					oldNavTargetId = this.state.navTargetId
 					const prev = NavUtil.getPrev(this.state)
 					if (this.gotoItem(prev)) {
-						APIUtil.postEvent({
+						this.networkAdapter.postEvent({
 							draftId: OboModel.getRoot().get('draftId'),
 							action: 'nav:prev',
 							eventVersion: '1.0.0',
@@ -64,7 +63,7 @@ class NavStore extends Store {
 					oldNavTargetId = this.state.navTargetId
 					const next = NavUtil.getNext(this.state)
 					if (this.gotoItem(next)) {
-						APIUtil.postEvent({
+						this.networkAdapter.postEvent({
 							draftId: OboModel.getRoot().get('draftId'),
 							action: 'nav:next',
 							eventVersion: '1.0.0',
@@ -79,7 +78,7 @@ class NavStore extends Store {
 				'nav:goto': payload => {
 					oldNavTargetId = this.state.navTargetId
 					if (this.gotoItem(this.state.itemsById[payload.value.id])) {
-						APIUtil.postEvent({
+						this.networkAdapter.postEvent({
 							draftId: OboModel.getRoot().get('draftId'),
 							action: 'nav:goto',
 							eventVersion: '1.0.0',
@@ -92,7 +91,7 @@ class NavStore extends Store {
 					}
 				},
 				'nav:lock': () => {
-					APIUtil.postEvent({
+					this.networkAdapter.postEvent({
 						draftId: OboModel.getRoot().get('draftId'),
 						action: 'nav:lock',
 						eventVersion: '1.0.0',
@@ -101,7 +100,7 @@ class NavStore extends Store {
 					this.setAndTrigger({ locked: true })
 				},
 				'nav:unlock': () => {
-					APIUtil.postEvent({
+					this.networkAdapter.postEvent({
 						draftId: OboModel.getRoot().get('draftId'),
 						action: 'nav:unlock',
 						eventVersion: '1.0.0',
@@ -110,7 +109,7 @@ class NavStore extends Store {
 					this.setAndTrigger({ locked: false })
 				},
 				'nav:close': () => {
-					APIUtil.postEvent({
+					this.networkAdapter.postEvent({
 						draftId: OboModel.getRoot().get('draftId'),
 						action: 'nav:close',
 						eventVersion: '1.0.0',
@@ -119,7 +118,7 @@ class NavStore extends Store {
 					this.setAndTrigger({ open: false })
 				},
 				'nav:open': () => {
-					APIUtil.postEvent({
+					this.networkAdapter.postEvent({
 						draftId: OboModel.getRoot().get('draftId'),
 						action: 'nav:open',
 						eventVersion: '1.0.0',
@@ -129,7 +128,7 @@ class NavStore extends Store {
 				},
 				'nav:toggle': () => {
 					const updatedState = { open: !this.state.open }
-					APIUtil.postEvent({
+					this.networkAdapter.postEvent({
 						draftId: OboModel.getRoot().get('draftId'),
 						action: 'nav:toggle',
 						eventVersion: '1.0.0',
@@ -163,7 +162,8 @@ class NavStore extends Store {
 		)
 	}
 
-	init(model, startingId, startingPath, visitId, viewState = {}) {
+	init(networkAdapter, model, startingId, startingPath, visitId, viewState = {}) {
+		this.networkAdapter = networkAdapter
 		this.state = {
 			items: {},
 			itemsById: {},
@@ -225,7 +225,7 @@ class NavStore extends Store {
 		}
 
 		FocusUtil.clearFadeEffect()
-		window.history.pushState({}, document.title, navItem.fullFlatPath)
+		Dispatcher.trigger('viewer:pushState', { url: navItem.fullFlatPath })
 		this.state.navTargetId = navItem.id
 		NavUtil.getNavTargetModel(this.state).processTrigger('onNavEnter')
 		this.triggerChange()

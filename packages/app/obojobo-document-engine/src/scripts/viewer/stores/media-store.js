@@ -1,6 +1,5 @@
 import Common from 'Common'
 
-import APIUtil from '../../viewer/util/api-util'
 import MediaUtil from '../../viewer/util/media-util'
 import NavStore from '../../viewer/stores/nav-store'
 
@@ -36,7 +35,7 @@ class MediaStore extends Store {
 		this.state.shown[id] = true
 		this.triggerChange()
 
-		APIUtil.postEvent({
+		this.networkAdapter.postEvent({
 			draftId: model.getRoot().get('draftId'),
 			action: 'media:show',
 			eventVersion: '1.0.0',
@@ -59,7 +58,7 @@ class MediaStore extends Store {
 		delete this.state.defaultZoomById[id]
 		this.triggerChange()
 
-		APIUtil.postEvent({
+		this.networkAdapter.postEvent({
 			draftId: model.getRoot().get('draftId'),
 			action: 'media:hide',
 			eventVersion: '1.0.0',
@@ -99,7 +98,7 @@ class MediaStore extends Store {
 
 		this.triggerChange()
 
-		APIUtil.postEvent({
+		this.networkAdapter.postEvent({
 			draftId: model.getRoot().get('draftId'),
 			action: 'media:setZoom',
 			eventVersion: '1.0.0',
@@ -124,7 +123,7 @@ class MediaStore extends Store {
 
 		this.triggerChange()
 
-		APIUtil.postEvent({
+		this.networkAdapter.postEvent({
 			draftId: model.getRoot().get('draftId'),
 			action: 'media:resetZoom',
 			eventVersion: '1.0.0',
@@ -143,7 +142,8 @@ class MediaStore extends Store {
 		})
 	}
 
-	init() {
+	init(networkAdapter) {
+		this.networkAdapter = networkAdapter
 		this.state = {
 			shown: {},
 			zoomById: {},
