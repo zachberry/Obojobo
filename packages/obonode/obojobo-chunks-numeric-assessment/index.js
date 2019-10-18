@@ -1,3 +1,7 @@
 module.exports = {
-	obojobo: {}
+	obojobo: {
+		viewerScripts: 'viewer.js',
+		editorScripts: 'editor.js',
+		serverScripts: ['server/numericassessment.js']
+	}
 }

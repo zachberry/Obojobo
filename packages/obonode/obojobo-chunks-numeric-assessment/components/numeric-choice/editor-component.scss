@@ -1,0 +1,46 @@
+@import '~styles/includes';
+
+.numeric-choice {
+	$color-border: #dfdfdf;
+
+	position: relative;
+	padding-bottom: 1rem;
+	border-bottom: 1px solid $color-border;
+
+	&.is-selected {
+		margin: -1px -1px 0 -1px;
+		border: 1px solid $color-highlight;
+		background-color: lighten($color-highlight, 19);
+	}
+
+	.correct-button {
+		$correct-font: 'Segoe UI Symbol', Arial, sans-serif;
+
+		position: absolute;
+		top: 3.3rem;
+		left: 1rem;
+		font-size: inherit;
+		background: transparent;
+		border: none;
+		font-family: $correct-font;
+
+		&.is-correct {
+			color: $color-correct;
+		}
+
+		&.is-not-correct {
+			color: $color-incorrect;
+		}
+	}
+
+	.numeric-feedback-editor {
+		margin: 0 3.5rem;
+	}
+
+	.delete-button {
+		button {
+			position: absolute;
+			top: 3.1rem;
+		}
+	}
+}
