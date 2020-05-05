@@ -13,7 +13,6 @@ const { Dispatcher } = Common.flux
 const { OboModel } = Common.models
 const { uuid, timeoutPromise } = Common.util
 
-// const SET_RESPONSE_EVENT_SEND_DELAY_MS = 4750
 const SEND_RESPONSE_TIMEOUT_MS = 6000
 
 const getNewContextState = () => {
@@ -77,12 +76,6 @@ class QuestionStore extends Store {
 				const responseMetadata = contextState.responseMetadata[id]
 				if (!responseMetadata) return
 
-				// // If force is false then we only want to re-sendResponse if the response
-				// // is in an error state.
-				// if (!force && responseMetadata.sendState !== QuestionResponseSendStates.ERROR) {
-				// 	return
-				// }
-
 				const sendResponsePromise = this.sendResponse(id, context)
 
 				responseMetadata.sendState = QuestionResponseSendStates.SENDING
@@ -90,32 +83,10 @@ class QuestionStore extends Store {
 
 				timeoutPromise(SEND_RESPONSE_TIMEOUT_MS, sendResponsePromise)
 
-				// APIUtil.postEvent({
-				// 	draftId: OboModel.getRoot().get('draftId'),
-				// 	action: 'question:setResponse',
-				// 	eventVersion: '2.2.0',
-				// 	visitId: NavStore.getState().visitId,
-				// 	payload: responseMetadata.details,
-				// 	actorTime: responseMetadata.time
-				// }).then(result => {
-				// 	if (result.response.status === 'ok') {
-				// 		Dispatcher.trigger('question:responseSet', result.sent.event.payload)
-
-				// 		const contextState = this.getOrCreateContextState(context)
-
-				// 		contextState.responseMetadata[id].sendState = QuestionResponseSendStates.RECORDED
-				// 	} else {
-				// 		contextState.responseMetadata[id].sendState = QuestionResponseSendStates.ERROR
-				// 	}
-
-				// 	this.triggerChange()
-				// })
-
 				this.triggerChange()
 			},
 
 			'question:setResponse': payload => {
-				console.log('q:sR', payload)
 				const {
 					context,
 					id,
@@ -126,7 +97,6 @@ class QuestionStore extends Store {
 					sendResponseImmediately
 				} = payload.value
 				const questionId = id
-				// const contextState = this.getOrCreateContextState(context)
 
 				this.setResponse({
 					questionId,
@@ -141,78 +111,6 @@ class QuestionStore extends Store {
 				if (sendResponseImmediately) {
 					QuestionUtil.sendResponse(id, context)
 				}
-
-				// contextState.responses[questionId] = response
-				// contextState.responseTimes[questionId] = new Date()
-				// contextState.responseSendState[questionId] = QuestionResponseSendStates.NOT_SENT
-
-				// console.log('SR', payload)
-
-				// if (debounce) {
-				// 	APIUtil.debouncedPostEvent(
-				// 		SET_RESPONSE_EVENT_SEND_DELAY_MS,
-				// 		() => {
-				// 			contextState.responseSendState[questionId] = QuestionResponseSendStates.SENDING
-				// 			this.triggerChange()
-				// 		},
-				// 		{
-				// 			draftId: OboModel.getRoot().get('draftId'),
-				// 			action: 'question:setResponse',
-				// 			eventVersion: '2.2.0',
-				// 			visitId: NavStore.getState().visitId,
-				// 			payload: {
-				// 				questionId,
-				// 				response,
-				// 				targetId,
-				// 				context,
-				// 				assessmentId,
-				// 				attemptId,
-				// 				debounce
-				// 			}
-				// 		},
-				// 		result => {
-				// 			if (result.response.status === 'ok') {
-				// 				Dispatcher.trigger('question:responseSet', result.sent.event.payload)
-
-				// 				const contextState = this.getOrCreateContextState(context)
-
-				// 				contextState.responseSendState[questionId] = QuestionResponseSendStates.RECORDED
-				// 			} else {
-				// 				contextState.responseSendState[questionId] = QuestionResponseSendStates.ERROR
-				// 			}
-
-				// 			this.triggerChange()
-				// 		}
-				// 	)
-				// } else {
-				// 	APIUtil.postEvent({
-				// 		draftId: OboModel.getRoot().get('draftId'),
-				// 		action: 'question:setResponse',
-				// 		eventVersion: '2.2.0',
-				// 		visitId: NavStore.getState().visitId,
-				// 		payload: {
-				// 			questionId,
-				// 			response,
-				// 			targetId,
-				// 			context,
-				// 			assessmentId,
-				// 			attemptId,
-				// 			debounce
-				// 		}
-				// 	}).then(result => {
-				// 		if (result.response.status === 'ok') {
-				// 			Dispatcher.trigger('question:responseSet', result.sent.event.payload)
-
-				// 			const contextState = this.getOrCreateContextState(context)
-
-				// 			contextState.responseSendState[questionId] = QuestionResponseSendStates.RECORDED
-				// 		} else {
-				// 			contextState.responseSendState[questionId] = QuestionResponseSendStates.ERROR
-				// 		}
-
-				// 		this.triggerChange()
-				// 	})
-				// }
 
 				this.triggerChange()
 			},

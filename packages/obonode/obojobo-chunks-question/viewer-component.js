@@ -195,13 +195,6 @@ export default class Question extends OboQuestionComponent {
 	}
 
 	reveal() {
-		// this.props.model.get('id'),
-		// 	response.state,
-		// 	response.targetId,
-		// 	this.props.moduleData.navState.context,
-		// 	this.props.moduleData.navState.context.split(':')[1],
-		// 	this.props.moduleData.navState.context.split(':')[2]
-
 		QuestionUtil.revealAnswer(this.props.model.get('id'), this.props.moduleData.navState.context)
 	}
 
@@ -297,8 +290,6 @@ export default class Question extends OboQuestionComponent {
 	}
 
 	componentDidUpdate() {
-		console.log('CDU', this.nextFocus)
-
 		switch (this.nextFocus) {
 			case FOCUS_TARGET_EXPLANATION:
 				delete this.nextFocus
@@ -314,14 +305,8 @@ export default class Question extends OboQuestionComponent {
 
 			case FOCUS_TARGET_QUESTION:
 				delete this.nextFocus
-				// const d = document.getElementsByClassName('viewer--viewer-app')[0]
-				// const st = d.scrollTop
 				FocusUtil.focusComponent(this.props.model.get('id'), { scroll: false })
 
-				// setTimeout(() => {
-				// 	const d2 = document.getElementsByClassName('viewer--viewer-app')[0]
-				// 	d2.scrollTop = st
-				// }, 0)
 				break
 		}
 	}
@@ -347,19 +332,6 @@ export default class Question extends OboQuestionComponent {
 		if (!this.assessmentComponentRef || !this.assessmentComponentRef.current) return null
 		return this.assessmentComponentRef.current.getInstructions()
 	}
-
-	// animationOnEntered() {
-	// 	console.log('on enter', this.refExplanation)
-	// 	this.solutionContainerHeight = `${this.refExplanation.current.getBoundingClientRect().height}px`
-	// }
-
-	// animationOnExit(el) {
-	// 	el.style.height = this.solutionContainerHeight
-	// }
-
-	// animationOnExiting(el) {
-	// 	el.style.height = 0
-	// }
 
 	getShouldShowRevealAnswerButton(mode, type, score, revealAnswerMode, questionAssessmentModel) {
 		// If we don't have a reference yet to the assessment component then abort
@@ -576,11 +548,6 @@ export default class Question extends OboQuestionComponent {
 					</div>
 				</div>
 
-				{/* <CSSTransition
-					in={responseSendState}
-					classNames="response-status"
-					timeout={ANIMATION_TRANSITION_TIME_MS}
-				> */}
 				{isAssessmentQuestion ? (
 					<div className="response-status-container">
 						<CSSTransition

@@ -103,8 +103,6 @@ class AssessmentStore extends Store {
 			machines: {}
 		}
 
-		console.log('init', attemptsByAssessment)
-
 		// Find all the assessments:
 		Object.values(OboModel.models)
 			.filter(model => model.get('type') === 'ObojoboDraft.Sections.Assessment')

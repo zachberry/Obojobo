@@ -112,8 +112,6 @@ class Decimal extends Numeric {
 			valueString = `${bigValueString}${trailingContent}`
 		}
 
-		console.log('vs', valueString)
-
 		return {
 			matchType: MATCH_EXACT,
 			valueString,
