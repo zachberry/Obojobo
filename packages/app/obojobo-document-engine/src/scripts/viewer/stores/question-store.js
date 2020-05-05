@@ -421,6 +421,8 @@ class QuestionStore extends Store {
 
 				// QuestionUtil.setScore(questionId, 100, 'Answer Revealed', null, context)
 
+				FocusUtil.clearFadeEffect()
+
 				this.triggerChange()
 
 				APIUtil.postEvent({
