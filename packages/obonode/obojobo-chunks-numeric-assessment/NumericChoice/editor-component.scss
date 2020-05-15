@@ -1,5 +1,7 @@
 @import '~styles/includes';
 
+$lighten-color-highlight: lighten($color-highlight, 19);
+
 .numeric-choice {
 	$color-border: #dfdfdf;
 
@@ -8,13 +10,13 @@
 	border-bottom: 1px solid $color-border;
 
 	&.is-selected {
-		margin: -1px -1px 0 -1px;
+		margin: -0.1em -0.1em 0 -0.1em;
 		border: 1px solid $color-highlight;
-		background-color: lighten($color-highlight, 19);
+		background-color: $lighten-color-highlight;
 	}
 
 	.correct-button {
-		$correct-font: 'Segoe UI Symbol', Arial, sans-serif;
+		$correct-font: 'Segoe UI Symbol', arial, sans-serif;
 
 		position: absolute;
 		top: 2.35em;
@@ -39,12 +41,5 @@
 
 	.numeric-feedback-editor {
 		margin: 0 3.5rem;
-	}
-
-	.delete-button {
-		button {
-			position: absolute;
-			top: 3.1rem;
-		}
 	}
 }
